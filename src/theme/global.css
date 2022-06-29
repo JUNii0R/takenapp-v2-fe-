@@ -1,0 +1,68 @@
+:root {
+    --font-primary: Whitney, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    --font-display: "ABC Ginto Normal", "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+    --brand-experiment: hsl(235, calc(var(--saturation-factor, 1)*85.6%), 64.7%);
+
+    --header-primary: #fff;
+
+    --black: #1E2029;
+    --black-darker: rgb(19, 19, 19);
+    --gray: #282B2D;
+    --purple: #9A6AFF;
+    --dark-purple: #723de6;
+    --white: #ffffff;
+    --smoke-white: #F5F5F5;
+
+}
+
+style attribute {
+    font-size: 100%;
+    --saturation-factor: 1;
+    --devtools-sidebar-width: 0px;
+}
+
+.g-SideMenuBar a {
+    /* Called In SideMenuBar.svelte */
+    cursor: pointer;
+    text-decoration: none;
+}
+.text-md-medium, .text-md-normal {
+    font-family: var(--font-primary);
+    font-size: 16px;
+    line-height: 20px;
+}
+.text-md-normal {
+    font-weight: 400;
+}
+
+.colorStandard {
+    color: #b9bbbe;
+    font-family: var(--font-display);
+}
+.size14 {
+    font-size: 14px;
+    line-height: 18px;
+}
+
+.h5 {
+    font-size: 12px;
+    line-height: 16px;
+    font-weight: 4600;
+    text-transform: uppercase;
+    color: #b9bbbe;
+}
+.defaultColor {
+    color: var(--header-primary);
+}
+
+a, abbr, acronym, address, applet, big, blockquote, body, caption, cite, code, dd, del, dfn, div, dl, dt, em, fieldset, form, h1, h2, h3, h4, h5, h6, html, iframe, img, ins, kbd, label, legend, li, object, ol, p, pre, q, s, samp, small, span, strike, strong, table, tbody, td, tfoot, th, thead, tr, tt, ul, var {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-weight: inherit;
+    font-style: inherit;
+    font-family: inherit;
+    font-size: 100%;
+    vertical-align: baseline;
+}

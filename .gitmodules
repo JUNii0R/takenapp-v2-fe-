@@ -1,0 +1,6 @@
+[submodule "lib/jslib--hkd-base"]
+	path = lib/jslib--hkd-base
+	url = git@github.com:HKdigital/jslib--hkd-base.git
+[submodule "lib/jslib--hkd-fe"]
+	path = lib/jslib--hkd-fe
+	url = git@github.com:HKdigital/jslib--hkd-fe.git
