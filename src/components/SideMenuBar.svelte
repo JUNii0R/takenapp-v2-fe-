@@ -2,54 +2,21 @@
 // -------------------------------------------------------------------- Imports
   import { Link } from "svelte-routing";
 
-  import {
-    timer,
-    timerStarted,
-    setTimer,
-    timerEnded,
-    stateWorking,
-  } from "@src/stores/timer.js";
-  import { getURL } from "@src/stores/previousPage.js";
+  import { setPreviousUrl } from "@src/stores/previousPage.js";
 
-  import { sec2time } from "../js/utils.js";
-  
+
+  import { timer } from "@src/stores/timer.js";
+	import { sec2time } from "@src/js/utils.js";
+  import { timerStarted } from "@src/stores/timer.js";
 // ------------------------------------------------------------------ Variables
-  export let active = '';
-
-  const presets = {
-    workName: "Work",
-    workSeconds: .1 * 60,
-    pauseName: "Rest",
-    pauseSeconds: 5 * 60,
-  };
-
-  $: display = sec2time($timer);
-    
-  let statusTimer = '';
-  let userLoggedIn = false; 
-
-  $: {
-    if ($timerStarted === true) {
-      statusTimer = 'Running';
-    } else {
-      statusTimer = 'Stopped';
-    }
-  }
   
-  $: {
-    if ($timerEnded) {
-      if (!$stateWorking) {
-        console.log("timer ended, switch to work");
-        setTimer(presets.workSeconds, true);
-        display = sec2time($timer);
-      // } else {
-        // console.log("timer ended, switch to pause");
-        // setTimer(presets.pauseSeconds, true);
-        // display = sec2time($timer);
-      }
-    }
-  }
-
+  export let active = "";
+  
+  let userLoggedIn = false; 
+  
+  
+  
+  $: display = sec2time($timer);
 </script>
 
 <title>{active} | Pomodoro Timer</title>
@@ -60,23 +27,23 @@
         <Link to="Login">
           <li class="Profile">
             <p on:click={() => {
-              getURL(window.location.href);
+              setPreviousUrl();
             }}>Login -></p>
           </li>
         </Link>
       {:else}
-      <Link to="Settings">
-        <li class="Settings"
-          class:active={active=="Settings"}>
-          <i class="fa-solid fa-gear fa-sm"></i>
-        </li>
-      </Link>
-      <Link to="Profile">
-        <li class="Profile"
-          class:active={active=="Profile"}>
-          <i class="fa-solid fa-user" />
-        </li>
-      </Link>
+        <Link to="Settings">
+          <li class="Settings"
+            class:active={active=="Settings"}>
+            <i class="fa-solid fa-gear fa-sm"></i>
+          </li>
+        </Link>
+        <Link to="Profile">
+          <li class="Profile"
+            class:active={active=="Profile"}>
+            <i class="fa-solid fa-user" />
+          </li>
+        </Link>
       {/if}
     </div>
     <div class="side-menu">
@@ -113,7 +80,7 @@
           <span><strong>Status</strong></span>
           <div class="timer-status">
             <span>Timer:</span>
-            {#if statusTimer === 'Running'}
+            {#if $timerStarted === true}
               <span style="color:#39FF14;">Running</span>
             {:else}
               <span style="color:#FF3131;">Stopped</span>
@@ -140,7 +107,7 @@
   display: grid;
   grid-template-rows: repeat(2, auto);
   padding-left: 6vw;
-  height: 100%;  
+  height: calc(100vh - 15px);  
   padding-right: 4vw;
   width: 25vw;
   min-width: 220px !important;

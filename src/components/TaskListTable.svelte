@@ -96,17 +96,16 @@
             <perfect-scrollbar class="ps-show-limits">
               <div style="position: static;" class="ps ps--active-y">
                 <div class="ps-content">
-                  <!-- {#each $Tasklist as task, i} -->
+                  {#each $Tasklist as task, i}
                     <ul class=" list-group list-group-flush">
-                      <!-- for each -->
                       <li class="list-group-item">
-                        <!-- {#if task.priority === 1}
+                        {#if task.priority === 1}
                           <div class="todo-indicator bg-danger" />
                         {:else if task.priority === 2}
                           <div class="todo-indicator bg-warning" />
                         {:else}
                           <div class="todo-indicator bg-primary" />
-                        {/if} -->
+                        {/if}
                         <div class="widget-content p-0">
                           <div class="widget-content-wrapper">
                             <div class="widget-content-left mr-2">
@@ -123,11 +122,11 @@
                             </div>
                             <div class="widget-content-left">
                               <div class="widget-heading">
-                                <!-- {task.title} -->
+                                {task.title}
                                 <!-- <div class="badge badge-danger ml-2">Rejected</div> -->
                               </div>
                               <div class="widget-subheading">
-                                <!-- <i>{task.description}</i> -->
+                                <i>{task.description}</i>
                               </div>
                             </div>
                             <div class="widget-content-right">
@@ -218,7 +217,7 @@
           </td>
         </div> -->
                     </ul>
-                  <!-- {/each} -->
+                  {/each}
                 </div>
               </div>
             </perfect-scrollbar>

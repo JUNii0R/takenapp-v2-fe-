@@ -17,16 +17,16 @@
     <label for="sound">Sound</label><br>
     <div>
       <input type="radio" id="css" name="fav_language" value="CSS">
-      <label for="css">CSS</label><br>
+      <label for="audioName_label">1</label><br>
       <input type="radio" id="javascript" name="fav_language" value="JavaScript">
-      <label for="css">CSS</label><br>
+      <label for="audioName_label">2</label><br>
     </div>
 </div>
 <div class="language-container">
   <p>Language</p>
   <select>
-    <option value="english">English</option>
     <option value="dutch">Nederlands</option>
+    <option selected value="english">English</option>
   </select>
 </div>
   

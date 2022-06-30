@@ -1,10 +1,12 @@
 :root {
-    --font-primary: Whitney, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    --brand-experiment: hsl(235, calc(var(--saturation-factor, 1)*85.6%), 64.7%);
+    
+    --font-primary: 'Whitney', "Helvetica Neue", Helvetica, Arial, sans-serif;
     --font-display: "ABC Ginto Normal", "Helvetica Neue", Helvetica, Arial, sans-serif;
 
-    --brand-experiment: hsl(235, calc(var(--saturation-factor, 1)*85.6%), 64.7%);
-
     --header-primary: #fff;
+    
+    --text-danger: hsl(359,calc(var(--saturation-factor, 1)*82%),73.9%);
 
     --black: #1E2029;
     --black-darker: rgb(19, 19, 19);
@@ -21,6 +23,26 @@ style attribute {
     --saturation-factor: 1;
     --devtools-sidebar-width: 0px;
 }
+
+@font-face {
+    font-family: 'Whitney';
+    font-style: normal;
+    font-weight: bold;
+    src: url('/fonts/Whitney-Bold.woff') format('woff');
+}
+  @font-face {
+    font-family: 'Whitney';
+    font-style: normal;
+    font-weight: normal;
+    src: url('/fonts/Whitney-Medium.woff') format('woff');
+}
+  @font-face {
+    font-family: 'Whitney';
+    font-style: italic;
+    font-weight: normal;
+    src: url('/fonts/Whitney-MediumItalic.woff') format('woff');
+  }
+
 
 .g-SideMenuBar a {
     /* Called In SideMenuBar.svelte */
@@ -66,3 +88,4 @@ a, abbr, acronym, address, applet, big, blockquote, body, caption, cite, code, d
     font-size: 100%;
     vertical-align: baseline;
 }
+

@@ -4,129 +4,319 @@
   const dispatch = createEventDispatcher();
 
   import { addTask } from "@src/helpers/tasks";
+
   import {
     timerStarted,
+    setTimer,
     startTimer,
     pauseTimer,
+    timer
   } from "@src/stores/timer.js";
+
+  import { sec2time } from "../js/utils.js";
+
   // ------------------------------------------------------------------ Variables
 
-  let taskTitle = "";
-  let taskDescription = "";
-  let taskStatus = "ongoing";
+  let titleInput = "";
+  let descriptionInput = "";
+
+  let titleError = false;
+
+
+  $: display = sec2time($timer);
+
 
 </script>
 
-<div class="login-box">
-  <form
-    on:submit|preventDefault={async () => {
-      await addTask({ taskTitle, taskDescription, taskStatus });
-      dispatch("taskAdded", { taskTitle, taskDescription, taskStatus });
-      taskTitle = "";
-      taskDescription = "";
-    }}
-  >
-    <div class="user-box">
-        <label class="input">
-            <input bind:value={taskTitle} class="input__field" type="text" placeholder=" " />
-            <span class="input__label">Title</span>
-        </label>
+<div class="wrapper">
+  <form class="authBoxExpanded authBox theme-dark ">
+    <div class="centeringWrapper">
+      <div class="mainLoginContainer marginTop90">
+       
+        <div class="header">
+          <h3
+            class="heading-xl-medium defaultColor title marginBottom8"
+            data-text-variant="heading-xl/medium">
+            {display} 
+          </h3>
+          <h5 class="marginTop20 colorStandard size14 h5 title defaultMarginh5">left</h5>
+        </div>
+        <div class="block marginTop90">
+          <div class="marginBottom20">
+            <h5
+              class:error={titleError === true}
+              class="colorStandard size14 h5 title defaultMarginh5">
+              Title
+              {#if titleError === true}
+                <span class="errorMessage">
+                  <span class="errorSeperator"> - </span>
+                  This field is required
+                </span>
+              {/if}
+            </h5>
+            <div class="input-2g input">
+              <div class="inputWrapper">
+                <input bind:value={titleInput} class="inputDefault input inputField" name="code" type="text" placeholder="" aria-label="Authenticatie Code" autocomplete="off" maxlength="999" spellcheck="false" aria-labelledby="uid_10" />
+              </div>
+            </div>
+          </div>
+          <div>
+            <h5 class="colorStandard size14 h5 title defaultMarginh5" id="uid_12">
+              Description
+            </h5>
+            <div class="inputWrapper">
+              <input bind:value={descriptionInput} class="inputDefault input inputField" name="password" type="text" aria-label="Wachtwoord" autocomplete="off" maxlength="999" spellcheck="false" aria-labelledby="uid_12" />
+            </div>
+          </div>
+          <button type="button" class="marginTop20 marginBottom8 button lookFilled colorBrand sizeLarge halfWidth grow"
+              on:click={() => {
+                setTimer(25 * 60, true);
+                titleInput = ""; 
+                descriptionInput = "";
+              }}>
+            <div class="contents">Reset</div>
+          </button>
+          <button type="button" class="marginTop20 marginBottom8 button lookFilled colorBrand sizeLarge halfWidth grow" 
+            on:click={() => { 
+              if ($timerStarted) {
+                pauseTimer();
+              } else {
+                startTimer();
+              }
+            }}>
+          <div class="contents">{$timerStarted ? "Stop" : "Start"}</div>
+        </button>
+        </div>
+      </div>
     </div>
-    <div class="user-box">
-        <label class="input">
-            <input bind:value={taskDescription} class="input__field" type="text" placeholder=" " />
-            <span class="input__label">Description</span>
-        </label>
-    </div>
-      <input type="submit" class="prim-btn"
-      on:click={() => {
-        if ($timerStarted) {
-          pauseTimer();
-        } else {
-          startTimer();
-        }
-      }} value={$timerStarted ? "Stop" : "Start"} >
   </form>
 </div>
 
 <style>
-  .login-box {
-    height: 100%;
-    background-color: red;
-  } 
-  div.user-box {
-    font-size: 23px;
-    font-family: "Noto Sans", sans-serif;
-    margin: 40px 20px;
+
+  /* -=-=- */
+  .authBoxExpanded {
+    width: 100% !important;
   }
-  /* select {
-    margin: 0 20px;
-    padding: 3px;
+  .authBox {
+    margin: 0;
+    padding: 32px;
+    font-size: 18px;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+  }
+  .theme-dark.authBox {
+    color: #72767d;
+    background: #36393f;
+  }
+  /* -=-=- */
+  .centeringWrapper {
+    width: 100%;
+    text-align: center;
+  }
+  /* -=-=- */
+  .mainLoginContainer {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -webkit-box-flex: 1;
+    -ms-flex-positive: 1;
+    flex-grow: 1;
+    -webkit-box-align: start;
+    -ms-flex-align: start;
+    align-items: start;
     width: auto;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-  } */
-
-  ::-webkit-input-placeholder {
-    text-align: center;
-    color: var(--black);
   }
 
-  :-moz-placeholder {
-    text-align: center;
-    color: var(--black);
+
+  /* -=-=- */
+  .header {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    width: 100%;
   }
 
-.input {
-  position: relative;
-  border: 1px solid rgb(202, 202, 202);
-  border-radius: 4px;
-}
+  .title {
+    font-weight: 600;
+  }
 
-.input__label {
-  font-family: "Noto Sans", sans-serif;
-  color: var(--black);
-  outline: none !important;
-  position: absolute;
-  top: 0;
-  left: 0;
-  padding: calc(var(--size-bezel) * 0.75) calc(var(--size-bezel) * .5);
-  margin: calc(var(--size-bezel) * 0.75 + 3px) calc(var(--size-bezel) * .5);
-  white-space: nowrap;
-  transform: translate(0, 0);
-  transform-origin: 0 0;
-  transition: transform 120ms ease-in;
-}
-.input__field {
-  font-family: "Lato", sans-serif;
-  -webkit-transition: all 0.3s ease;
-  -moz-transition: all 0.3s ease;
-  transition: all 0.3s ease;
-  border: 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.5);
-  font-weight: 600;
-  color: var(--black);
-  box-sizing: border-box;
-  display: block;
-  width: 100%;
-  padding: calc(var(--size-bezel) * 1.5) var(--size-bezel);
-  background: transparent;
-}
-.input__field:focus {
-    background: transparent;
+  .inputField {
+    border: none;
+    background-color: transparent;
+  }
+  .inputDefault {
+    padding: 10px;
+    height: 40px;
+  }
+  .input {
+    font-size: 16px;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    width: 100%;
+    border-radius: 3px;
+    color: #dcddde;
+    background-color: #202225;
+    border: none;
+    -webkit-transition: border-color 0.2s ease-in-out;
+    transition: border-color 0.2s ease-in-out;
+  }
+  .input-2g {
+    font-size: 16px;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    width: 100%;
+    border-radius: 3px;
+    color: #dcddde;
+    background-color: #202225;
+    border: none;
+    -webkit-transition: border-color 0.2s ease-in-out;
+    transition: border-color 0.2s ease-in-out;
+  }
+
+  .button {
+    position: relative;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    background: none;
+    border: none;
+    border-radius: 3px;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 16px;
+    padding: 2px 16px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+
+  .lookFilled.colorBrand {
+    color: #fff;
+    background-color: var(--brand-experiment);
+  }
+
+  .heading-xl-medium {
+    font-family: var(--font-display);
+    font-size: 95px;
+    line-height: 30px;
+  }
+
+  .marginBottom8 {
+    margin-bottom: 8px;
+  }
+  .marginBottom20 {
+    margin-bottom: 20px;
+  }
+  .marginTop90 {
+    margin-top: 90px;
+  }
+  .marginTop20 {
+    margin-top: 20px;
+  }
+  .halfWidth {
+    width: 50% !important;
+  }
+
+  .sizeLarge {
+    width: 130px;
+    height: 44px;
+    min-width: 130px;
+    min-height: 44px;
+  }
+
+  .grow {
+    width: auto;
+  }
+  .lookFilled {
+    -webkit-transition: background-color 0.17s ease, color 0.17s ease;
+    transition: background-color 0.17s ease, color 0.17s ease;
+  }
+  ::placeholder,
+  button,
+  input {
+    font-family: var(--font-primary);
+    text-rendering: optimizeLegibility;
+  }
+  ::-webkit-input-placeholder,
+  button,
+  input {
+    font-family: var(--font-primary);
+    text-rendering: optimizeLegibility;
+  }
+  button {
+    font-family: var(--font-primary);
+    font-weight: 500;
+    border: 0;
+    cursor: pointer;
+  }
+  input:focus,
+  button:focus {
     outline: none;
-}
-.input__field:not(:-moz-placeholder-shown) + .input__label {
-  transform: translate(0.25rem, -65%) scale(0.8);
-  color: lightslategray;
-}
-.input__field:not(:-ms-input-placeholder) + .input__label {
-  transform: translate(0.25rem, -65%) scale(0.8);
-  color: lightslategray;
-}
-.input__field:focus + .input__label, .input__field:not(:placeholder-shown) + .input__label {
-  transform: translate(0.20rem, -65%) scale(0.8);
-  color: lightslategray;
-}
+  }
+  .block {
+    width: 100%;
+    text-align: left;
+  }
+  .defaultMarginh5 {
+    margin-bottom: 8px;
+  }
+
+  .wrapper {
+    width: 100%;
+    height: 100%;
+  }
+  @media (min-width: 486px) {
+    .wrapper {
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-box-align: center;
+      -ms-flex-align: center;
+      -webkit-box-pack: center;
+      -ms-flex-pack: center;
+      justify-content: center;
+    }
+  }
+  span {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-weight: inherit;
+    font-style: inherit;
+    font-family: inherit;
+    font-size: 100%;
+    vertical-align: baseline;
+  }
+
+  .error {
+    color: var(--text-danger);
+  }
+  .errorMessage {
+    font-size: 12px;
+    font-weight: 600;
+    font-style: italic;
+    text-transform: none;
+  }
+
 </style>

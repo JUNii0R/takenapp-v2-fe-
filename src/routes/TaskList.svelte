@@ -5,13 +5,13 @@
   // import AddTaskForm from "@src/components/AddTaskForm.svelte";
 
   import TaskListTable from "@src/components/TaskListTable.svelte";
-  import { numSelected } from "@src/helpers/Tasklist.js";
-
-  
   import EditPopup from "@src/components/EditPopup.svelte";
   import AddPopup from "@src/components/AddPopup.svelte";
+  import ProcessBar from "@src/components/ProcessBar.svelte";
+  
+  import { numSelected } from "@src/helpers/Tasklist.js";
   import { visible_edit, visible_add } from "@src/helpers/Popup.js";
-
+  
 
   // ------------------------------------------------------------------ Variables
 
@@ -21,38 +21,45 @@
 $: console.log($visible_edit, $visible_add);
 
 </script>
-
-<div class="outer-grid">
-  <MenuBar active="Task List" />
-  <div class="content-grid">
-    <div class="row-top">
-      {$numSelected}
-    </div>
-      <div class="table-container">
-        {#if $visible_edit === true}
-          <EditPopup />
-        {:else if $visible_add === true}
-          <AddPopup />
-        {/if}
-          <TaskListTable />
+<div class="body">
+  <ProcessBar />
+  <div class="outer-grid">
+    <MenuBar active="Task List" />
+    <div class="content-grid">
+      <div class="row-top">
+        {$numSelected}
       </div>
+        <div class="table-container">
+          {#if $visible_edit === true}
+            <EditPopup />
+          {:else if $visible_add === true}
+            <AddPopup />
+          {/if}
+            <TaskListTable />
+        </div>
+    </div>
   </div>
 </div>
 
+
 <style>
+  .body {
+    display: grid;
+    grid-template-rows: min-content 1fr;
+  }
+
   /* -------------------------------------------------------------- START GRID */
 
   .outer-grid {
-    width: 100%;
-    height: 100vh;
+    width: 100vw;
     display: grid;
-    grid-template-columns: min-content auto;
+    grid-template-columns: min-content 1fr;
   }
 
   .content-grid {
     background-color: var(--white-darker);
     width: 100%;
-    height: 100vh;
+    height: calc(100vh - 15px);
     display: grid;
     grid-template-rows: minmax(80px, 17vh) 1fr;
   }
